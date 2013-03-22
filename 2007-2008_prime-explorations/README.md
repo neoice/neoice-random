@@ -9,14 +9,14 @@ version control system yet, preferring to name files by date and revision number
 I have also included the list of the first 1 million prime numbers. I used this
 and the `diff` command to determine if my program was producing the correct output.
 
-version history
-1.00: initial code
-1.01: ignore numbers divisible by 2
-1.02: switched int to unsigned long
-1.03: floating point exceptions.
-1.04: changed changed algorithm structure.
-1.05: switched algorithm to hacked version of Sieves. runtime: >7s
-1.06: removed printf, write to file instead
+    version history
+    1.00: initial code
+    1.01: ignore numbers divisible by 2
+    1.02: switched int to unsigned long
+    1.03: floating point exceptions.
+    1.04: changed changed algorithm structure.
+    1.05: switched algorithm to hacked version of Sieves. runtime: >7s
+    1.06: removed printf, write to file instead
 
 # client/server version
 
