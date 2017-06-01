@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
 require 'time'
 
 # build our days. we use an array so we can do
@@ -8,43 +9,46 @@ now  = DateTime.now
 day  = now.strftime("%Y%m%d")
 days = [ day ]
 
-#days  = ["20160929", "20160930", "20161003",]
-
-# hard-coded variables.
-# get bent.
-
+# hard-coded variables. get bent.
 target_dir = "/tank/media/music/c895"
+puts "[!] base directory => #{target_dir}"
 
 # morning show
 # TODO: this varies with DST!!!
-hours = ["14", "15", "16", "17"]
 dj = "drew-bailey"
 
 # vortex
-#hours = ["03", "04", "05", "06"]
-#dj = "adrian-woods"
+#hours = ["03", "04", "05", "06"20170529
+#dj = "dj-tamm"
 
 # common
 minutes = ["0000", "1500", "3000", "4500"]
 
-# let's print some info first
-# directory for today too
-day_str = now.strftime('%A %b %d')
-day_dir = now.strftime("%Y-%m-%d_%A").downcase
-
-puts "[!] today is #{day_str}"
-
-puts "[!] saving files to #{target_dir}"
-puts "[+] making directory #{day_dir}"
-
 sleep 2
-Dir.mkdir "#{target_dir}/#{day_dir}"
 
 days.each do |x|
-  puts "[+] ripping day #{x}"
+  ts = Time.new(x[0..3],x[4..5], x[6..7])
+  day_str = ts.strftime('%A %b %d')
+  day_dir = ts.strftime("%Y-%m-%d_%A").downcase
+
+  puts "[!] ripping day #{x} #{day_str}"
+  puts "[-] making directory #{day_dir}"
+  FileUtils.mkdir_p "#{target_dir}/#{day_dir}"
+
+  if ts.dst?
+    hours = ["13", "14", "15", "16"]
+  else
+    hours = ["14", "15", "16", "17"]
+  end
+
   hours.each do |y|
     minutes.each do |z|
       filename = "knhc_#{x}-#{y}#{z}.mp3"
+
+      if File.file?("#{target_dir}/#{day_dir}/#{filename}")
+        puts "[-] #{filename} exists, skipping."
+        next
+      end
 
       puts "[-] downloading file #{filename}..."
 
