@@ -27,6 +27,7 @@ minutes = ["0000", "1500", "3000", "4500"]
 sleep 2
 
 days.each do |x|
+  stime = Time.now
   ts = Time.new(x[0..3],x[4..5], x[6..7])
   day_str = ts.strftime('%A %b %d')
   day_dir = ts.strftime("%Y-%m-%d_%A").downcase
@@ -56,4 +57,7 @@ days.each do |x|
       `curl 'https://s3-us-west-1.amazonaws.com/rfa-archive-dev/#{filename}' --silent -H 'Accept-Encoding: identity;q=1, *;q=0' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36' -H 'Accept: */*' -H 'Referer: http://www.radiofreeamerica.com/dj/#{dj}' -H 'Connection: keep-alive' -H 'Range: bytes=0-' --compressed > #{target_dir}/#{day_dir}/#{filename}`
     end
   end
+  etime = Time.now
+
+  puts "[+] finished in #{etime - stime} seconds"
 end
